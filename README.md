@@ -140,18 +140,21 @@ If `mpirun` command is missing
 ```
 echo 'module load mpi/openmpi-x86_64' >> $HOME/.bashrc
 ```
-If `module` is missing as well, log out & log in.
+If `module` is missing, log out & log in.
+
 2. Activate newer ParaView (optional)
 ```
 echo 'export PATH=/usr/lib/openfoam/ParaView-5.9.0/bin:$PATH' >> $HOME/.bashrc
 ```
 You may see a lot of warning messages.
+
 3. Fix internal HDD ownership after reinstallation.
 ```
 su root
 chown -R <username> <path>
 chgrp -R <groupname> <path>
 ```
+
 4. Mount NTFS format external HDD
 ```
 yum -y install ntfs-3g
