@@ -1,4 +1,6 @@
 # OztekinGroup
+## New tutorial for [RHEL 8 series](https://github.com/BrushXue/OztekinGroup/blob/main/Rocky.md)
+
 Instructions to reinstall lab workstations
 
 End of life: June 30th, 2024
