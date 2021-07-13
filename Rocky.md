@@ -44,11 +44,11 @@ Install prerequisites
 mkdir -p /share/Apps
 dnf -y install libpng12 libnsl
 ```
-Login to group NAS
+Login to group NAS via SFTP
 ```
-smb://<username>@oztekingroup.dept.lehigh.edu
+sftp://<username>@oztekingroup.dept.lehigh.edu
 ```
-Copy all files from `/mnt/Lab/gux215/a****/share_files` and `v211` to `/share/Apps/a****`
+Copy all files from `/mnt/Lab/gux215/A****` to `/share/Apps/A****`
 
 While waiting for it, you can continue and come back later.
 
