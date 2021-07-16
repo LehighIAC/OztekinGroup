@@ -25,7 +25,7 @@ Reboot
 
 ## Nvidia Driver
 ```
-dnf install -y tar bzip2 make automake gcc gcc-c++ pciutils elfutilslibelf-devel libglvnd-devel
+dnf install -y tar bzip2 make automake gcc gcc-c++ pciutils elfutils libelf-devel libglvnd-devel
 dnf config-manager --set-enabled powertools
 dnf install -y epel-release
 dnf -y update
