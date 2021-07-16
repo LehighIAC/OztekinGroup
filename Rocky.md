@@ -24,14 +24,14 @@ Go to `Utilities -> Disks` and select HDD. Click `Edit mount options` and switch
 Reboot
 
 ## Nvidia Driver
-Import ELRepo
 ```
-rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
-dnf -y install https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm
-```
-Install Nvidia **390** driver(Latest version may not work on legacy GPUs)
-```
-dnf -y install kmod-nvidia-390xx
+dnf install -y tar bzip2 make automake gcc gcc-c++ pciutils elfutilslibelf-devel libglvnd-devel
+dnf config-manager --set-enabled powertools
+dnf install -y epel-release
+dnf -y update
+dnf config-manager --add-repo http://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo
+dnf install -y kernel-devel-$(uname -r) kernel-headers-$(uname -r) kernel kernel-core kernel-modules
+dnf -y module install nvidia-driver:latest-dkms
 nvidia-xconfig
 ```
 Reboot
@@ -57,9 +57,6 @@ Use `chmod +x -R` to fix executable permission.
 ## OpenFOAM
 Install pre-compiled OpenFOAM
 ```
-dnf -y install epel-release
-dnf -y update
-dnf config-manager --set-enabled powertools
 dnf -y copr enable openfoam/openfoam
 dnf -y install openfoam-selector
 dnf -y install openfoam2012-default
