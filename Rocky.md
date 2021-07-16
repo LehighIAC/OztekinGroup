@@ -44,7 +44,7 @@ Install prerequisites
 mkdir -p /share/Apps
 dnf -y install libpng12 libnsl
 ```
-Login to group NAS via SFTP
+Login to group NAS via **SFTP** (DO NOT use SMB here)
 ```
 sftp://<username>@oztekingroup.dept.lehigh.edu
 ```
