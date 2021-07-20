@@ -63,6 +63,7 @@ dnf -y install openfoam2012-default
 ```
 Install Paraview
 ```
+dnf -y install qt5-qttools-libs-help
 dnf -y install paraview --enablerepo=epel-testing
 ```
 ## swak4foam
