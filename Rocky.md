@@ -52,7 +52,7 @@ Copy all files from `/mnt/Lab/gux215/A****` to `/share/Apps/A****`
 
 While waiting for it, you can continue and come back later.
 
-Use `chmod +x -R` to fix executable permission.
+Use `chown -R oztekinlab A****` and `chgrp -R oztekinlab A****` to fix permission if you copied A**** in root account.
 
 ## OpenFOAM
 Install pre-compiled OpenFOAM
