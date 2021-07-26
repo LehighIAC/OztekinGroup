@@ -1,6 +1,7 @@
 # OztekinGroup
 Instructions to reinstall lab workstations
 
+End Of Life: 31st May 2029
 ## Creating Installer
 1. Download the latest Rocky Linux image from https://download.rockylinux.org/pub/rocky/8/isos/x86_64/Rocky-8.4-x86_64-dvd1.iso
 2. Use [balenaEtcher](https://www.balena.io/etcher/) to write .iso to a flash drive. This tool is cross-platform and you can do it on any OS.
