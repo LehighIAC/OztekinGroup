@@ -59,7 +59,7 @@ Install pre-compiled OpenFOAM
 ```
 dnf -y copr enable openfoam/openfoam
 dnf -y install openfoam-selector
-dnf -y install openfoam2012-default
+dnf -y install openfoam2106-default
 ```
 Install Paraview
 ```
@@ -74,7 +74,7 @@ alternatives --set python /usr/bin/python3
 exit
 ```
 ```
-echo 'source /usr/lib/openfoam/openfoam2012/etc/bashrc $FOAM_SETTINGS' >> $HOME/.bashrc
+echo 'source /usr/lib/openfoam/openfoam2106/etc/bashrc $FOAM_SETTINGS' >> $HOME/.bashrc
 source $HOME/.bashrc
 cd $HOME
 mkdir OpenFOAM
