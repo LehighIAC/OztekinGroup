@@ -26,13 +26,11 @@ Reboot
 
 ## Nvidia Driver
 ```
-dnf install -y tar bzip2 make automake gcc gcc-c++ pciutils elfutils elfutils-libelf-devel libglvnd-devel
 dnf config-manager --set-enabled powertools
 dnf install -y epel-release
 dnf -y update
 dnf config-manager --add-repo http://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo
-dnf install -y kernel-devel-$(uname -r) kernel-headers-$(uname -r) kernel kernel-core kernel-modules
-dnf -y module install nvidia-driver:latest-dkms
+dnf -y module install nvidia-driver:418
 nvidia-xconfig
 ```
 Reboot
@@ -60,13 +58,20 @@ Install pre-compiled OpenFOAM
 ```
 dnf -y copr enable openfoam/openfoam
 dnf -y install openfoam-selector
-dnf -y install openfoam2106-default
+dnf -y install openfoam2112-default
 ```
 Install Paraview
 ```
 dnf -y install qt5-qttools-libs-help
 dnf -y install paraview
 ```
+Source OpenFOAM folder
+```
+echo 'module load mpi/openmpi-x86_64' >> $HOME/.bashrc
+echo 'source /usr/lib/openfoam/openfoam2112/etc/bashrc $FOAM_SETTINGS' >> $HOME/.bashrc
+source $HOME/.bashrc
+```
+If `module` is missing, log out & log in.
 ## swak4foam
 ```
 su root
@@ -75,8 +80,6 @@ alternatives --set python /usr/bin/python3
 exit
 ```
 ```
-echo 'source /usr/lib/openfoam/openfoam2106/etc/bashrc $FOAM_SETTINGS' >> $HOME/.bashrc
-source $HOME/.bashrc
 cd $HOME
 mkdir OpenFOAM
 cd OpenFOAM
@@ -126,21 +129,14 @@ In `Extensions` tab switch on `Application menu`. Go to the setting button of `D
 In `Windows` tab enable minimize and maximize button.
 
 ## Post-installation
-1. Can't run OpenFOAM in parallel
-If `mpirun` command is missing
+1. Mount NTFS format external HDD
 ```
-echo 'module load mpi/openmpi-x86_64' >> $HOME/.bashrc
+dnf -y install ntfs-3g
 ```
-If `module` is missing, log out & log in.
 
 2. Fix internal HDD ownership after reinstallation.
 ```
 su root
 chown -R <username> <path>
 chgrp -R <groupname> <path>
-```
-
-3. Mount NTFS format external HDD
-```
-dnf -y install ntfs-3g
 ```
