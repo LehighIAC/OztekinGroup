@@ -42,7 +42,7 @@ A**** 21R1 works with Red Hat 8 and its replica.
 Install prerequisites
 ```
 mkdir -p /share/Apps
-dnf -y install libpng12 libnsl
+dnf -y install libpng12 libnsl redhat-lsb-core
 ```
 Download A**** via **rsync** (DO NOT use SMB here)
 ```
