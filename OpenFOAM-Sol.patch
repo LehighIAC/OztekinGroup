@@ -51,7 +51,7 @@ index 4d2fd7e32c..9642a49663 100644
  #------------------------------------------------------------------------------
  # USER EDITABLE PART: Changes made here may be lost with the next upgrade
  
--adios2_version=ADIOS2-2.6.0
+-adios2_version=ADIOS2-2.7.1
 -export ADIOS2_ARCH_PATH="$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/$adios2_version"
 +adios2_version=ADIOS2-system
 +export ADIOS2_ARCH_PATH=/share/Apps/lusoft/opt/spack/linux-centos8-haswell/gcc-9.3.0/adios2/2.6.0-6wadxol
@@ -111,7 +111,7 @@ index e037dd6bfa..d23525cd53 100644
  #------------------------------------------------------------------------------
  # USER EDITABLE PART: Changes made here may be lost with the next upgrade
  
--petsc_version=petsc-3.16.2
+-petsc_version=petsc-3.17.2
 -export PETSC_ARCH_PATH="$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER$WM_PRECISION_OPTION$WM_LABEL_OPTION/$petsc_version"
 +petsc_version=petsc-system
 +export PETSC_ARCH_PATH=/share/Apps/lusoft/opt/spack/linux-centos8-haswell/gcc-9.3.0/petsc/3.14.1-vfz6kbv
