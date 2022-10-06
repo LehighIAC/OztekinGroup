@@ -1,12 +1,12 @@
-# Compile OpenFOAM v2112 on Lehigh Sol
-1. Download OpenFOAM v2112
+# Compile OpenFOAM v2206 on Lehigh Sol
+1. Download OpenFOAM v2206
 ```bash
 cd $HOME
 mkdir OpenFOAM
 cd OpenFOAM
-git clone https://develop.openfoam.com/Development/openfoam.git OpenFOAM-v2112
-cd OpenFOAM-v2112
-git checkout OpenFOAM-v2112
+git clone https://develop.openfoam.com/Development/openfoam.git OpenFOAM-v2206
+cd OpenFOAM-v2206
+git checkout OpenFOAM-v2206
 wget https://github.com/BrushXue/OztekinGroup/raw/main/OpenFOAM-Sol.patch
 git apply OpenFOAM-Sol.patch
 git submodule init
@@ -18,7 +18,7 @@ git submodule update
 # Use gcc and mpich for best compatibility across all clusters
 echo "module load gcc" >> $HOME/.bashrc
 echo "module load mpich" >> $HOME/.bashrc
-echo "source $HOME/OpenFOAM/OpenFOAM-v2112/etc/bashrc" >> $HOME/.bashrc
+echo "source $HOME/OpenFOAM/OpenFOAM-v2206/etc/bashrc" >> $HOME/.bashrc
 source $HOME/.bashrc
 # These modules are used during compilation
 # Load them in SLURM scripts as needed
@@ -65,7 +65,8 @@ export WM_NCOMPPROCS=2
 source /etc/profile.d/zlmod.sh
 module load gcc
 module load mpich
-source /home/YOUR_USERNAME/OpenFOAM/OpenFOAM-v2112/etc/bashrc
+module load scotch metis
+source /home/YOUR_USERNAME/OpenFOAM/OpenFOAM-v2206/etc/bashrc
 
 cd ${SLURM_SUBMIT_DIR}
 decomposePar
