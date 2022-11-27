@@ -4,8 +4,8 @@ Instructions to reinstall lab workstations
 End Of Life: 31st May 2029
 ## Creating Installer
 1. Make sure the `Secure Boot` in UEFI BIOS is disabled.
-2. Download the latest Rocky Linux image from https://download.rockylinux.org/pub/rocky/8/isos/x86_64/Rocky-8.6-x86_64-dvd1.iso
-3. Use [Ventoy]([https://www.balena.io/etcher/](https://github.com/ventoy/Ventoy/releases)) to install the image. You don't need to write images to the flash drive anymore.
+2. Download the latest Rocky Linux image from https://download.rockylinux.org/pub/rocky/8/isos/x86_64/Rocky-8.7-x86_64-dvd1.iso
+3. Use [Ventoy](https://github.com/ventoy/Ventoy/releases) to install the image. You don't need to write images to the flash drive anymore.
 4. Boot from the flash drive and select Rocky Linux image.
 5. Install Rocky Linux. If you experience graphics issue, press `e` and append `nomodeset` then press ctrl+x to start installer. If still not working, select `Troubleshooting -> ****** in basic graphics mode`.
 ## Options
@@ -85,7 +85,7 @@ mkdir OpenFOAM
 cd OpenFOAM
 hg clone http://hg.code.sf.net/p/openfoam-extend/swak4Foam swak4Foam
 cd swak4Foam
-hg update 816fd4168b87
+hg update develop
 export WM_NCOMPPROCS=$(nproc)
 ./AllwmakeAll
 ```
@@ -104,9 +104,9 @@ pyFoamPlotWatcher.py <logfilename>
 ```
 ## Install Anydesk & Teamviewer
 ```
-wget https://download.anydesk.com/linux/anydesk-6.1.1-1.el8.x86_64.rpm
+wget https://download.anydesk.com/linux/anydesk-6.2.1-1.el8.x86_64.rpm
 wget https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
-dnf -y install anydesk-6.1.1-1.el8.x86_64.rpm teamviewer.x86_64.rpm
+dnf -y install anydesk-6.2.1-1.el8.x86_64.rpm teamviewer.x86_64.rpm
 ```
 Then enable unattended access.
 ## Customization (Optional)
