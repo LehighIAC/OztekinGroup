@@ -4,13 +4,14 @@ Instructions to reinstall lab workstations
 End Of Life: 2030
 ## Creating Installer
 1. Make sure the `Secure Boot` in UEFI BIOS is disabled.
-2. Download [Ubuntu 20.04 LTS image](https://releases.ubuntu.com/focal/ubuntu-20.04.5-desktop-amd64.iso)
-3. Use [Ventoy](https://github.com/ventoy/Ventoy/releases) to install the image. You don't need to write images to the flash drive anymore.
+2. Download [Ubuntu 20.04 LTS image](https://releases.ubuntu.com/focal/ubuntu-20.04.5-desktop-amd64.iso).
+3. Use [Ventoy](https://github.com/ventoy/Ventoy/releases) to create the installer media. You don't need to write images to the flash drive anymore.
 4. Boot from the flash drive and select Ubuntu image.
-5. Install Ubuntu. If you experience graphics issue, press `e` and append `nomodeset` then press ctrl+x to start installer.
+5. Install Ubuntu. 
 ## Options
-1. Installation Destination: Choose the SSD and select `I will configure partitioning`. Delete all existing partitions and select `Standard Partition`. Set up 200 MB for `/boot/efi`, **at least** 80 GB for `/`(use `ext4`) and the rest to `/home`(use `ext4`). No need to have `/swap` if the RAM is large enough.
-2. set username as `oztekinlab` if it's a public workstation
+1. Choose `Minimal Installaion`. Select `Downloads updates`. Don't install third party software for now.
+2. Installation Destination: Select `Something else`. Delete all existing partitions on the SSD. Set up 200 MB for `EFI System Partition`, **at least** 90 GB for `/`(use `ext4`) and the rest to `/home`(use `ext4`). No need to have `/swap` if the RAM is large enough.
+3. set username as `oztekinlab` if it's a public workstation
 
 ## Initialization
 Perform system update
@@ -28,7 +29,19 @@ Go to `Additional Drivers` app, select the latest NVIDIA driver that has been **
 Wait until finish then restart.
 ### AMD
 `amdgpu` is built into kernel and AMD graphic cards are plug-and-play.
-
+### Fully disable Wayland
+Wayland is still enabled at login screen. Disable it to help remote desktop working properly.
+```
+sudo nano /etc/gdm3/custom.conf
+```
+Uncomment this line:
+```
+#WaylandEnable=false
+```
+then restart the service
+```
+sudo systemctl restart gdm3
+```
 ## Install A****(you know...)
 A**** 22R2 works with Ubuntu 20.04 LTS.
 
@@ -39,12 +52,12 @@ sudo apt install -y libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 liba
 Download A**** via **rsync** (DO NOT use SMB here)
 ```
 sudo mkdir -p /share/Apps
-sudo rsync -aP username@oztekingroup.dept.lehigh.edu:/mnt/Lab/gux215/A**** /share/Apps
+sudo rsync -aP <username>@oztekingroup.dept.lehigh.edu:/mnt/Lab/IAC/<A****> /share/Apps
 ```
 
 While waiting for it, you can continue and come back later.
 
-Use `chown -R oztekinlab A****` and `chgrp -R oztekinlab A****` to fix permission.
+Use `chown -R oztekinlab <A****>` and `chgrp -R oztekinlab <A****>` to fix permission.
 
 ## OpenFOAM
 ```
@@ -60,14 +73,15 @@ sudo apt install -y paraview
 ```
 
 ## swak4foam
+We know commit `4d6d607f3ff5` is working on v2206 for sure...
 ```
-sudo apt install mercurial python2-dev python3-dev python-is-python3
+sudo apt install mercurial python2-dev python3-dev python-is-python3 bison lua5.3
 cd $HOME
 mkdir OpenFOAM
 cd OpenFOAM
 hg clone http://hg.code.sf.net/p/openfoam-extend/swak4Foam swak4Foam
 cd swak4Foam
-hg update develop
+hg update 4d6d607f3ff5
 export WM_NCOMPPROCS=$(nproc)
 ./AllwmakeAll
 ```
@@ -87,9 +101,18 @@ pyFoamPlotWatcher.py <logfilename>
 ```
 wget https://download.anydesk.com/linux/anydesk_6.2.1-1_amd64.deb
 wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
-sudo apt install anydesk_6.2.1-1_amd64.deb teamviewer_amd64.deb
+sudo apt install -y ./anydesk_6.2.1-1_amd64.deb ./teamviewer_amd64.deb
 ```
 Then enable unattended access.
+
+## Install Rustdesk
+```
+wget https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9.deb
+sudo apt install -y ./rustdesk-1.1.9.deb
+```
+The server address is `oztekingroup.dept.lehigh.edu`
+
+The public key is `Pg1rNc2wFY5x2LdhYLSEzmGpQXC6yDgCdjZ3CgbDwd8=`
 
 ## Post-installation
 1. Fix internal HDD ownership after reinstallation.
