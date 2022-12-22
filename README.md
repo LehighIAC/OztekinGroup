@@ -68,6 +68,7 @@ echo 'source /usr/lib/openfoam/openfoam2206/etc/bashrc' >> ~/.bashrc
 ```
 
 ## Paraview
+Install Paraview 5.7 and its dependencies
 ```
 sudo apt install -y paraview
 ```
@@ -81,7 +82,7 @@ echo 'PATH=~/ParaView/bin:$PATH' >> ~/.bashrc
 ## swak4foam
 We know commit `4d6d607f3ff5` is working on v2206 for sure...
 ```
-sudo apt install mercurial python2-dev python3-dev python-is-python3 bison lua5.3
+sudo apt install -y mercurial python2-dev python3-dev python-is-python3 bison lua5.3
 cd $HOME
 mkdir OpenFOAM
 cd OpenFOAM
@@ -89,9 +90,9 @@ hg clone http://hg.code.sf.net/p/openfoam-extend/swak4Foam swak4Foam
 cd swak4Foam
 hg update 4d6d607f3ff5
 export WM_NCOMPPROCS=$(nproc)
-./AllwmakeAll
+./Allwmake
 ```
-If the compilation fails, run `./AllwmakeAll` multiple rounds until it finishes.
+If the compilation fails, run `./Allwmake` multiple rounds until it finishes.
 
 ## pyFoam
 ```
