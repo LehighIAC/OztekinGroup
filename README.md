@@ -71,7 +71,13 @@ echo 'source /usr/lib/openfoam/openfoam2206/etc/bashrc' >> ~/.bashrc
 ```
 sudo apt install -y paraview
 ```
-
+If you want to use the latest version(5.11)
+```
+wget https://www.paraview.org/files/v5.11/ParaView-5.11.0-MPI-Linux-Python3.9-x86_64.tar.gz
+tar -xvf ParaView-5.11.0-MPI-Linux-Python3.9-x86_64.tar.gz
+mv ParaView-5.11.0-MPI-Linux-Python3.9-x86_64/ ParaView
+echo 'PATH=~/ParaView/bin:$PATH' >> ~/.bashrc 
+```
 ## swak4foam
 We know commit `4d6d607f3ff5` is working on v2206 for sure...
 ```
