@@ -103,11 +103,10 @@ Usage:
 ```
 pyFoamPlotWatcher.py <logfilename>
 ```
-## Install Anydesk & Teamviewer
+## Install Anydesk
 ```
 wget https://download.anydesk.com/linux/anydesk_6.2.1-1_amd64.deb
-wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
-sudo apt install -y ./anydesk_6.2.1-1_amd64.deb ./teamviewer_amd64.deb
+sudo apt install -y ./anydesk_6.2.1-1_amd64.deb
 ```
 Then enable unattended access.
 
@@ -116,7 +115,7 @@ Then enable unattended access.
 wget https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9.deb
 sudo apt install -y ./rustdesk-1.1.9.deb
 ```
-The server address is `oztekingroup.dept.lehigh.edu`
+The private server address is `oztekingroup.dept.lehigh.edu`
 
 The public key is `Pg1rNc2wFY5x2LdhYLSEzmGpQXC6yDgCdjZ3CgbDwd8=`
 
