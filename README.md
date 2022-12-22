@@ -43,7 +43,7 @@ then restart the service
 sudo systemctl restart gdm3
 ```
 ## Install A****(you know...)
-A**** 22R2 works with Ubuntu 20.04 LTS.
+A**** works with Ubuntu 20.04 LTS.
 
 Install prerequisites
 ```
@@ -52,12 +52,12 @@ sudo apt install -y libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 liba
 Download A**** via **rsync** (DO NOT use SMB here)
 ```
 sudo mkdir -p /share/Apps
-sudo rsync -aP <username>@oztekingroup.dept.lehigh.edu:/mnt/Lab/IAC/<A****> /share/Apps
+sudo rsync -aP <username>@oztekingroup.dept.lehigh.edu:/mnt/Lab/IAC/A* /share/Apps
 ```
 
 While waiting for it, you can continue and come back later.
 
-Use `chown -R oztekinlab <A****>` and `chgrp -R oztekinlab <A****>` to fix permission.
+Use `chown -R oztekinlab /share/Apps/A*` and `chgrp -R oztekinlab /share/Apps/A*` to fix permission.
 
 ## OpenFOAM
 ```
