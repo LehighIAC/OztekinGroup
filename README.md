@@ -63,8 +63,8 @@ Use `chown -R oztekinlab /share/Apps/A*` and `chgrp -R oztekinlab /share/Apps/A*
 ```
 sudo apt install -y curl
 curl https://dl.openfoam.com/add-debian-repo.sh | sudo bash
-sudo apt install -y openfoam2206-default
-echo 'source /usr/lib/openfoam/openfoam2206/etc/bashrc' >> ~/.bashrc 
+sudo apt install -y openfoam2212-default
+echo 'source /usr/lib/openfoam/openfoam2212/etc/bashrc' >> ~/.bashrc 
 ```
 
 ## Paraview
@@ -80,7 +80,6 @@ mv ParaView-5.11.0-MPI-Linux-Python3.9-x86_64/ ParaView
 echo 'PATH=~/ParaView/bin:$PATH' >> ~/.bashrc 
 ```
 ## swak4foam
-We know commit `4d6d607f3ff5` is working on v2206 for sure...
 ```
 sudo apt install -y mercurial python2-dev python3-dev python-is-python3 bison lua5.3
 cd $HOME
@@ -88,7 +87,7 @@ mkdir OpenFOAM
 cd OpenFOAM
 hg clone http://hg.code.sf.net/p/openfoam-extend/swak4Foam swak4Foam
 cd swak4Foam
-hg update 4d6d607f3ff5
+hg update 1642259a7273
 export WM_NCOMPPROCS=$(nproc)
 ./Allwmake
 ```
