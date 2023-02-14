@@ -120,7 +120,10 @@ The private server address is `oztekingroup.dept.lehigh.edu`
 The public key is `Pg1rNc2wFY5x2LdhYLSEzmGpQXC6yDgCdjZ3CgbDwd8=`
 
 ## Post-installation
-1. Fix internal HDD ownership after reinstallation.
+1. Block future update to 22.04
+![Capture1](https://user-images.githubusercontent.com/12702149/218801208-82a09f68-1420-444e-b441-56d83d846491.PNG)
+
+2. Fix internal HDD ownership after reinstallation.
 ```
 su root
 chown -R <username> <path>
