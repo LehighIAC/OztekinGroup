@@ -12,7 +12,7 @@ export MPI_ROOT=/opt/FJSVstclanga/cp-1.0.21.02/
 ```
 module load cmake/3.24.2
 ```
-## Download OpenFOAM
+## Download OpenFOAM-v2212
 ```
 git clone https://develop.openfoam.com/Development/openfoam.git OpenFOAM-v2212
 cd OpenFOAM-v2212
@@ -31,7 +31,7 @@ git apply cgal.patch
 wget https://github.com/BrushXue/OztekinGroup/Ookami/raw/main/fujitsu.patch
 git apply fujitsu.patch
 ```
-## Download ThirdParty
+## Download ThirdParty-v2212
 ```
 cd ..
 git clone https://develop.openfoam.com/Development/ThirdParty-common.git ThirdParty-v2212
