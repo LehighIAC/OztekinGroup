@@ -84,6 +84,8 @@ tar -xvf v2.8.3.tar.gz --directory sources/adios
 ```
 cd $WM_PROJECT_DIR
 ./Allwmake -j 24 -l
+#Run again to check if all libraries/apps are built
+./Allwmake -j 24 -l
 ```
 wait for ~8 hours.
 
