@@ -1,0 +1,242 @@
+diff --git a/etc/bashrc b/etc/bashrc
+index a935a16f93..52d16466cb 100644
+--- a/etc/bashrc
++++ b/etc/bashrc
+@@ -68,7 +68,7 @@ export WM_COMPILER_TYPE=system
+ # [WM_COMPILER] - Compiler:
+ # = Gcc | Clang | Icc | Icx | Amd | Arm | Cray | Fujitsu | Nvidia |
+ #   Gcc<digits> | Clang<digits>
+-export WM_COMPILER=Gcc
++export WM_COMPILER=Fujitsu
+
+ # [WM_PRECISION_OPTION] - Floating-point precision:
+ # = DP | SP | SPDP
+@@ -99,7 +99,7 @@ export WM_COMPILE_OPTION=Opt
+ #   HPMPI | CRAY-MPICH | FJMPI | QSMPI | SGIMPI | INTELMPI | USERMPI
+ # Specify SYSTEMOPENMPI1, SYSTEMOPENMPI2 for internal tracking (if desired)
+ # Can also use INTELMPI-xyz etc and define your own wmake rule
+-export WM_MPLIB=SYSTEMOPENMPI
++export WM_MPLIB=FJMPI
+
+
+ #------------------------------------------------------------------------------
+@@ -129,7 +129,7 @@ projectDir="$HOME/OpenFOAM/OpenFOAM-$WM_PROJECT_VERSION"
+ # [FOAM_SIGFPE] - Trap floating-point exceptions.
+ #               - overrides the 'trapFpe' controlDict entry
+ # = true | false
+-#export FOAM_SIGFPE=true
++export FOAM_SIGFPE=false
+
+ # [FOAM_SETNAN] - Initialize memory with NaN
+ #               - overrides the 'setNaN' controlDict entry
+diff --git a/etc/config.sh/CGAL b/etc/config.sh/CGAL
+index 68f679de00..0d4cc9eeb8 100644
+--- a/etc/config.sh/CGAL
++++ b/etc/config.sh/CGAL
+@@ -44,7 +44,7 @@
+ # USER EDITABLE PART: Changes made here may be lost with the next upgrade
+
+ boost_version=boost_1_74_0
+-cgal_version=CGAL-4.14.3
++cgal_version=CGAL-5.5.1
+
+ export BOOST_ARCH_PATH="$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/$boost_version"
+ export CGAL_ARCH_PATH="$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/$cgal_version"
+diff --git a/etc/config.sh/FFTW b/etc/config.sh/FFTW
+index 6d26f9d970..d6753c33e1 100644
+--- a/etc/config.sh/FFTW
++++ b/etc/config.sh/FFTW
+@@ -34,9 +34,8 @@
+ #------------------------------------------------------------------------------
+ # USER EDITABLE PART: Changes made here may be lost with the next upgrade
+
+-fftw_version=fftw-3.3.10
+-export FFTW_ARCH_PATH=$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/$fftw_version
+-
++fftw_version=fftw-system
++export FFTW_ARCH_PATH=/lustre/software/fftw3/fujitsu/sve-v1.0.0
+ # END OF (NORMAL) USER EDITABLE PART
+ #------------------------------------------------------------------------------
+ if [ -n "$FOAM_VERBOSE" ] && [ -n "$PS1" ]
+diff --git a/etc/config.sh/kahip b/etc/config.sh/kahip
+index 135c4e2dd0..f83c0e76c9 100644
+--- a/etc/config.sh/kahip
++++ b/etc/config.sh/kahip
+@@ -36,7 +36,7 @@
+ #------------------------------------------------------------------------------
+ # USER EDITABLE PART: Changes made here may be lost with the next upgrade
+
+-KAHIP_VERSION=kahip-3.14
++KAHIP_VERSION=kahip-none
+ export KAHIP_ARCH_PATH=$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/$KAHIP_VERSION
+
+ # END OF (NORMAL) USER EDITABLE PART
+diff --git a/etc/config.sh/petsc b/etc/config.sh/petsc
+index 1dad20841f..cf7ade83a8 100644
+--- a/etc/config.sh/petsc
++++ b/etc/config.sh/petsc
+@@ -27,8 +27,8 @@
+ #------------------------------------------------------------------------------
+ # USER EDITABLE PART: Changes made here may be lost with the next upgrade
+
+-petsc_version=petsc-3.18.2
+-export PETSC_ARCH_PATH="$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER$WM_PRECISION_OPTION$WM_LABEL_OPTION/$petsc_version"
++petsc_version=petsc-system
++export PETSC_ARCH_PATH=/lustre/software/petsc/fujitsu4.8/3.18.3/
+
+ # END OF (NORMAL) USER EDITABLE PART
+ #------------------------------------------------------------------------------
+diff --git a/src/OpenFOAM/matrices/lduMatrix/lduMatrix/lduMatrixATmul.C b/src/OpenFOAM/matrices/lduMatrix/lduMatrix/lduMatrixATmul.C
+index c0e05719fa..ccc6682e8f 100644
+--- a/src/OpenFOAM/matrices/lduMatrix/lduMatrix/lduMatrixATmul.C
++++ b/src/OpenFOAM/matrices/lduMatrix/lduMatrix/lduMatrixATmul.C
+@@ -80,8 +80,22 @@ void Foam::lduMatrix::Amul
+
+     for (label face=0; face<nFaces; face++)
+     {
+-        ApsiPtr[uPtr[face]] += lowerPtr[face]*psiPtr[lPtr[face]];
+-        ApsiPtr[lPtr[face]] += upperPtr[face]*psiPtr[uPtr[face]];
++// Fujitsu 2020/12/18 mod >>>
++        // ApsiPtr[uPtr[face]] += lowerPtr[face]*psiPtr[lPtr[face]];
++	    // ApsiPtr[lPtr[face]] += upperPtr[face]*psiPtr[uPtr[face]];
++        label uPtmp = uPtr[face];
++        label lPtmp = lPtr[face];
++        solveScalar lowerPtrtmp = lowerPtr[face];
++        solveScalar upperPtrtmp = upperPtr[face];
++        solveScalar psiu = psiPtr[uPtmp];
++        solveScalar psil = psiPtr[lPtmp];
++        solveScalar lowerApsiPtr = ApsiPtr[uPtmp];
++        solveScalar upperApsiPtr = ApsiPtr[lPtmp];
++        solveScalar tmplowerApsiPtr = lowerApsiPtr+lowerPtrtmp*psil;
++        solveScalar tmpupperApsiPtr = upperApsiPtr+upperPtrtmp*psiu;
++        ApsiPtr[uPtmp] = tmplowerApsiPtr;
++        ApsiPtr[lPtmp] = tmpupperApsiPtr;
++// Fujitsu 2020/12/18 mod <<<
+     }
+
+     // Update interface interfaces
+diff --git a/src/OpenFOAM/matrices/lduMatrix/smoothers/GaussSeidel/GaussSeidelSmoother.C b/src/OpenFOAM/matrices/lduMatrix/smoothers/GaussSeidel/GaussSeidelSmoother.C
+index 5ce88656f3..bd0592341a 100644
+--- a/src/OpenFOAM/matrices/lduMatrix/smoothers/GaussSeidel/GaussSeidelSmoother.C
++++ b/src/OpenFOAM/matrices/lduMatrix/smoothers/GaussSeidel/GaussSeidelSmoother.C
+@@ -142,6 +142,14 @@ void Foam::GaussSeidelSmoother::smooth
+         label fStart;
+         label fEnd = ownStartPtr[0];
+
++// Fujitsu 2021/6/14 mod >>>
++        // div Vectorize
++        solveScalar diagPtr_inv[nCells];
++        for (label celli=0; celli<nCells; ++celli) {
++            diagPtr_inv[ celli ] = 1.0 / diagPtr[ celli ];
++        }
++// Fujitsu 2021/6/14 mod <<<
++
+         for (label celli=0; celli<nCells; celli++)
+         {
+             // Start and end of this row
+@@ -152,13 +160,19 @@ void Foam::GaussSeidelSmoother::smooth
+             psii = bPrimePtr[celli];
+
+             // Accumulate the owner product side
++// Fujitsu 2021/6/14 mod >>>
++            #pragma clang loop vectorize(disable)
++// Fujitsu 2021/6/14 mod <<<
+             for (label facei=fStart; facei<fEnd; facei++)
+             {
+                 psii -= upperPtr[facei]*psiPtr[uPtr[facei]];
+             }
+
+             // Finish psi for this cell
+-            psii /= diagPtr[celli];
++// Fujitsu 2021/6/14 mod >>>
++            //psii /= diagPtr[celli];
++            psii *= diagPtr_inv[celli]; // div Vectorize
++// Fujitsu 2021/6/14 mod <<<
+
+             // Distribute the neighbour side using psi for this cell
+             for (label facei=fStart; facei<fEnd; facei++)
+diff --git a/src/OpenFOAM/matrices/lduMatrix/smoothers/symGaussSeidel/symGaussSeidelSmoother.C b/src/OpenFOAM/matrices/lduMatrix/smoothers/symGaussSeidel/symGaussSeidelSmoother.C
+index e9e26efa24..8b4062fa25 100644
+--- a/src/OpenFOAM/matrices/lduMatrix/smoothers/symGaussSeidel/symGaussSeidelSmoother.C
++++ b/src/OpenFOAM/matrices/lduMatrix/smoothers/symGaussSeidel/symGaussSeidelSmoother.C
+@@ -142,6 +142,14 @@ void Foam::symGaussSeidelSmoother::smooth
+         label fStart;
+         label fEnd = ownStartPtr[0];
+
++// Fujitsu 2021/6/14 mod >>>
++        // div Vectorize
++        solveScalar diagPtr_inv[nCells];
++        for (label celli=0; celli<nCells; ++celli) {
++            diagPtr_inv[ celli ] = 1.0 / diagPtr[ celli ];
++        }
++// Fujitsu 2021/6/14 mod <<<
++
+         for (label celli=0; celli<nCells; celli++)
+         {
+             // Start and end of this row
+@@ -152,13 +160,19 @@ void Foam::symGaussSeidelSmoother::smooth
+             psii = bPrimePtr[celli];
+
+             // Accumulate the owner product side
++// Fujitsu 2021/6/14 mod >>>
++            #pragma clang loop vectorize(disable)
++// Fujitsu 2021/6/14 mod <<<
+             for (label facei=fStart; facei<fEnd; facei++)
+             {
+                 psii -= upperPtr[facei]*psiPtr[uPtr[facei]];
+             }
+
+             // Finish current psi
+-            psii /= diagPtr[celli];
++// Fujitsu 2021/6/14 mod >>>
++            //psii /= diagPtr[celli];
++            psii *= diagPtr_inv[celli]; // div Vectorize
++// Fujitsu 2021/6/14 mod <<<
+
+             // Distribute the neighbour side using current psi
+             for (label facei=fStart; facei<fEnd; facei++)
+@@ -181,13 +195,19 @@ void Foam::symGaussSeidelSmoother::smooth
+             psii = bPrimePtr[celli];
+
+             // Accumulate the owner product side
++// Fujitsu 2021/6/14 mod >>>
++            #pragma clang loop vectorize(disable)
++// Fujitsu 2021/6/14 mod <<<
+             for (label facei=fStart; facei<fEnd; facei++)
+             {
+                 psii -= upperPtr[facei]*psiPtr[uPtr[facei]];
+             }
+
+             // Finish psi for this cell
+-            psii /= diagPtr[celli];
++// Fujitsu 2021/6/14 mod >>>
++            //psii /= diagPtr[celli];
++            psii *= diagPtr_inv[celli]; // div Vectorize
++// Fujitsu 2021/6/14 mod <<<
+
+             // Distribute the neighbour side using psi for this cell
+             for (label facei=fStart; facei<fEnd; facei++)
+diff --git a/wmake/rules/linuxARM64Fujitsu/c b/wmake/rules/linuxARM64Fujitsu/c
+index a7524703b1..bf91ae46d5 100644
+--- a/wmake/rules/linuxARM64Fujitsu/c
++++ b/wmake/rules/linuxARM64Fujitsu/c
+@@ -5,6 +5,7 @@ include $(GENERAL_RULES)/Clang/c
+
+ cc         := fcc$(COMPILER_VERSION)
+ cARCH      :=
++cOPT       := -Nclang -O3 -march=armv8.3-a+sve
+
+ ifneq (,$(strip $(WM_COMPILE_OPTION)))
+     sinclude $(DEFAULT_RULES)/c$(WM_COMPILE_OPTION)
+diff --git a/wmake/rules/linuxARM64Fujitsu/c++ b/wmake/rules/linuxARM64Fujitsu/c++
+index 094e5e4746..7a3aef9e9c 100644
+--- a/wmake/rules/linuxARM64Fujitsu/c++
++++ b/wmake/rules/linuxARM64Fujitsu/c++
+@@ -5,6 +5,7 @@ include $(GENERAL_RULES)/Clang/c++
+
+ CC         := FCC$(COMPILER_VERSION) -std=c++14
+ c++ARCH    := -pthread
++c++OPT     := -Nclang -O3 -march=armv8.2-a+sve -ffj-largepage
+
+ ifneq (,$(strip $(WM_COMPILE_OPTION)))
+     sinclude $(DEFAULT_RULES)/c++$(WM_COMPILE_OPTION)
