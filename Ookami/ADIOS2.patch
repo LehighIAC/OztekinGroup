@@ -1,0 +1,24 @@
+diff --git a/makeAdios2 b/makeAdios2
+index 496f655..6f46cdc 100755
+--- a/makeAdios2
++++ b/makeAdios2
+@@ -200,8 +200,8 @@ else
+         # May not work properly with FOAM_MPI = dummy
+         if [ "$FOAM_MPI" != dummy ]
+         then
+-            CC=mpicc
+-            CXX=mpicxx
++            CC=mpifcc
++            CXX=mpiFCC
+         fi
+
+         cmake=$(findCMake)
+@@ -211,6 +211,8 @@ else
+         ${cmake:?} \
+             -DCMAKE_INSTALL_PREFIX="$PKG_PREFIX" \
+             -DCMAKE_BUILD_TYPE=Release \
++            -DCMAKE_C_FLAGS=-Nclang \
++            -DCMAKE_CXX_FLAGS=-Nclang \
+             -DADIOS2_USE_Fortran=FALSE \
+             -DADIOS2_BUILD_EXAMPLES=FALSE \
+             ${WM_QUIET:+-DCMAKE_RULE_MESSAGES=OFF} \
