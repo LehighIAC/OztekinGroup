@@ -1,0 +1,141 @@
+diff --git a/applications/utilities/mesh/generation/foamyMesh/conformalVoronoiMesh/conformalVoronoiMesh/CGALTriangulation3DKernel.H b/applications/utilities/mesh/generation/foamyMesh/conformalVoronoiMesh/conformalVoronoiMesh/CGALTriangulation3DKernel.H
+index 2795dff15b..107aef1a4c 100644
+--- a/applications/utilities/mesh/generation/foamyMesh/conformalVoronoiMesh/conformalVoronoiMesh/CGALTriangulation3DKernel.H
++++ b/applications/utilities/mesh/generation/foamyMesh/conformalVoronoiMesh/conformalVoronoiMesh/CGALTriangulation3DKernel.H
+@@ -30,8 +30,8 @@ Description
+ 
+ \*---------------------------------------------------------------------------*/
+ 
+-#ifndef CGALTriangulation3DKernel_H
+-#define CGALTriangulation3DKernel_H
++#ifndef Foam_CGALTriangulation3DKernel_H
++#define Foam_CGALTriangulation3DKernel_H
+ 
+ // Silence boost bind deprecation warnings (before CGAL-5.2.1)
+ #include "CGAL/version.h"
+@@ -54,9 +54,19 @@ Description
+ //    #include "CGAL/Robust_circumcenter_traits_3.h"
+ //    typedef CGAL::Robust_circumcenter_traits_3<baseK>           K;
+ 
++#if defined(CGAL_VERSION_NR) && (CGAL_VERSION_NR < 1050500000)
++    // Prior to CGAL-5.5
++
+     #include "CGAL/Robust_circumcenter_filtered_traits_3.h"
+     typedef CGAL::Robust_circumcenter_filtered_traits_3<baseK>  K;
+ 
++#else
++
++    #include "CGAL/Robust_weighted_circumcenter_filtered_traits_3.h"
++    typedef CGAL::Robust_weighted_circumcenter_filtered_traits_3<baseK> K;
++
++#endif
++
+ #else
+ 
+     // Very robust but expensive kernel
+diff --git a/applications/utilities/preProcessing/viewFactorsGen/Make/options b/applications/utilities/preProcessing/viewFactorsGen/Make/options
+index 08e64c8a7d..cc5cbf8c6b 100644
+--- a/applications/utilities/preProcessing/viewFactorsGen/Make/options
++++ b/applications/utilities/preProcessing/viewFactorsGen/Make/options
+@@ -4,7 +4,6 @@ EXE_INC = \
+     -Wno-old-style-cast \
+     $(COMP_FLAGS) \
+     ${CGAL_INC} \
+-    -DCGAL_HEADER_ONLY \
+     -I$(LIB_SRC)/finiteVolume/lnInclude \
+     -I$(LIB_SRC)/surfMesh/lnInclude \
+     -I$(LIB_SRC)/meshTools/lnInclude \
+@@ -12,7 +11,6 @@ EXE_INC = \
+ 
+ 
+ EXE_LIBS = \
+-    /* ${CGAL_LIBS} */ \
+     -lfiniteVolume \
+     -lsurfMesh \
+     -lmeshTools \
+diff --git a/wmake/rules/General/cgal b/wmake/rules/General/cgal
+index 7442d4071e..e147b8e0b1 100644
+--- a/wmake/rules/General/cgal
++++ b/wmake/rules/General/cgal
+@@ -1,21 +1,26 @@
+ # ----------------------------------------------------------------------------
+ # CGAL definitions - several possibilities
+ #
+-#  0. missing
+-#  1. header-only
+-#  2. library, no mpfr
+-#  3. library, with mpfr (a likely default)
++#  - missing
++#  - header-only
++#  - header-only, no mpfr
++#  - library, no mpfr
++#  - library, with mpfr (default for older CGAL)
+ #
+ # Dispatch according to the defined 'CGAL_FLAVOUR'
+ # - names may change [see wmake/scripts/have_cgal]
+-# (no-cgal | cgal-header | cgal-no-mpfr | cgal-mpfr)
++# (no-cgal | cgal-header | cgal-header-no-mpfr | cgal-no-mpfr | cgal-mpfr)
+ 
+ cgal_subrule := cgal-mpfr
+-ifneq (,$(findstring header,$(CGAL_FLAVOUR)))
+-    cgal_subrule := cgal-header-only
+-endif
+ ifneq (,$(findstring no-mpfr,$(CGAL_FLAVOUR)))
+     cgal_subrule := cgal-no-mpfr
++    ifneq (,$(findstring header,$(CGAL_FLAVOUR)))
++        cgal_subrule := cgal-header-no-mpfr
++    endif
++else
++    ifneq (,$(findstring header,$(CGAL_FLAVOUR)))
++        cgal_subrule := cgal-header-only
++    endif
+ endif
+ 
+ # ----------------------------------------------------------------------------
+diff --git a/wmake/rules/General/cgal-header-no-mpfr b/wmake/rules/General/cgal-header-no-mpfr
+new file mode 100644
+index 0000000000..a2e7cf01c8
+--- /dev/null
++++ b/wmake/rules/General/cgal-header-no-mpfr
+@@ -0,0 +1,18 @@
++# -----------------------------------------------------------------------------
++# CGAL (header-only version) without mpfr
++
++CGAL_INC  = -DCGAL_HEADER_ONLY
++CGAL_LIBS =
++
++CGAL_INC  += \
++    $(foreach dir,$(BOOST_INC_DIR),-I$(dir)) \
++    $(foreach dir,$(CGAL_INC_DIR),-I$(dir))
++
++CGAL_LIBS += \
++    $(foreach dir,$(BOOST_LIB_DIR),-L$(dir))
++
++# ----
++# Extra failsafe - still needed? (2020-05-15)
++## CGAL_INC  += -I/usr/local/include -I/usr/include
++
++# -----------------------------------------------------------------------------
+diff --git a/wmake/rules/darwin64Clang/cgal b/wmake/rules/darwin64Clang/cgal
+deleted file mode 100644
+index b04e6b0c68..0000000000
+--- a/wmake/rules/darwin64Clang/cgal
++++ /dev/null
+@@ -1,14 +0,0 @@
+-# ----------------------------------------------------------------------------
+-# CGAL on Darwin
+-# CGAL (library version) without mpfr
+-
+-CGAL_INC  = \
+-    $(foreach dir,$(BOOST_INC_DIR),-I$(dir)) \
+-    $(foreach dir,$(CGAL_INC_DIR),-I$(dir))
+-
+-CGAL_LIBS = \
+-    $(foreach dir,$(BOOST_LIB_DIR),-L$(dir)) \
+-    $(foreach dir,$(CGAL_LIB_DIR),-L$(dir)) \
+-    -lCGAL
+-
+-# ----------------------------------------------------------------------------
+-- 
+GitLab
+
