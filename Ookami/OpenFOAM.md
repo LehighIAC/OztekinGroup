@@ -24,7 +24,7 @@ source etc/bashrc
 ```
 ### Apply A64FX patch
 ```
-wget https://github.com/BrushXue/OztekinGroup/Ookami/raw/main/fujitsu.patch
+wget https://github.com/BrushXue/OztekinGroup/raw/main/Ookami/fujitsu.patch
 git apply fujitsu.patch
 ```
 ## Download ThirdParty-v2212
@@ -36,8 +36,8 @@ git checkout v2212
 ```
 ### Patch ADIOS2 script
 ```
-wget https://github.com/BrushXue/OztekinGroup/Ookami/raw/main/adios.patch
-git apply adios.patch
+wget https://github.com/BrushXue/OztekinGroup/raw/main/Ookami/ADIOS2.patch
+git apply ADIOS2.patch
 ```
 ## Build Third Party
 ```
