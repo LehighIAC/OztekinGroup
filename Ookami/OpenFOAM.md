@@ -59,7 +59,7 @@ mkdir -p sources/metis
 tar -xvf metis-5.1.0.tar.gz --directory sources/metis
 ./makeMETIS
 ```
-### Build CGAL/boost
+### Build CGAL
 ```
 wget https://github.com/CGAL/cgal/releases/download/releases/CGAL-4.14.3/CGAL-4.14.3.tar.xz
 mkdir -p sources/cgal
