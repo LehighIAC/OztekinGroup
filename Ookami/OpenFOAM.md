@@ -14,7 +14,7 @@ export MPI_ROOT=/opt/FJSVstclanga/cp-1.0.21.02/
 module load cmake/3.24.2
 ```
 ## Download OpenFOAM-v2212
-Start from the folder you want, e.g. `cd /lustre`
+Start from the folder you want, e.g. `cd /lustre/software/openFoam`
 ```
 git clone https://develop.openfoam.com/Development/openfoam.git OpenFOAM-v2212
 cd OpenFOAM-v2212
