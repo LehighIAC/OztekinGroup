@@ -6,6 +6,7 @@ SSH to fj-debug nodes
 module load fujitsu/compiler/4.8
 module load fftw3/fujitsu/sve-1.0.0
 module load petsc/fujitsu4.8/3.18.3
+module load boost/1.71.0
 export MPI_ROOT=/opt/FJSVstclanga/cp-1.0.21.02/
 ```
 ### Build only
@@ -20,11 +21,6 @@ git checkout OpenFOAM-v2212
 git submodule init
 git submodule update
 source etc/bashrc
-```
-### Backport [CGAL patch](https://develop.openfoam.com/Development/openfoam/-/commit/03ab6c1a9dd38bad53f95ce84218660b39b6116b)
-```
-wget https://github.com/BrushXue/OztekinGroup/Ookami/raw/main/cgal.patch
-git apply cgal.patch
 ```
 ### Apply A64FX patch
 ```
@@ -64,16 +60,13 @@ tar -xvf metis-5.1.0.tar.gz --directory sources/metis
 ```
 ### Build CGAL/boost
 ```
-wget https://sourceforge.net/projects/boost/files/boost/1.74.0/boost_1_74_0.tar.bz2
-wget https://github.com/CGAL/cgal/releases/download/v5.5.1/CGAL-5.5.1.tar.xz
-mkdir -p sources/boost
+wget https://github.com/CGAL/cgal/releases/download/releases/CGAL-4.14.3/CGAL-4.14.3.tar.xz
 mkdir -p sources/cgal
-tar -xvf boost_1_74_0.tar.bz2 --directory sources/boost
-tar -xvf CGAL-5.5.1.tar.xz --directory sources/cgal
-./makeCGAL gmp-none mpfr-none
+tar -xvf CGAL-4.14.3.tar.xz --directory sources/cgal
+./makeCGAL -with-lib gmp-none mpfr-none
 ```
 ### Build ADIOS2
-Currently not available due to `libfabric` issue. Also need to disable `$WM_PROJECT_DIR/etc/config.sh/adios2`
+Currently not available due to `libfabric` issue.
 ```
 wget https://github.com/ornladios/ADIOS2/archive/v2.8.3.tar.gz
 mkdir -p sources/adios
@@ -89,11 +82,12 @@ cd $WM_PROJECT_DIR
 ```
 wait for ~8 hours.
 
-The module should load the following
+The module should load the following commands:
 ```
 module load fujitsu/compiler/4.8
 module load fftw3/fujitsu/sve-1.0.0
 module load petsc/fujitsu4.8/3.18.3
+module load boost/1.71.0
 export MPI_ROOT=/opt/FJSVstclanga/cp-1.0.21.02/ 
 source ???/OpenFOAM-v2212/etc/bashrc
 ```
