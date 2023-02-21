@@ -77,12 +77,13 @@ tar -xvf v2.8.3.tar.gz --directory sources/adios
 ## Build OpenFOAM
 ```
 cd $WM_PROJECT_DIR
-./Allwmake -j 24 -l
-#Run again to check if all libraries/apps are built
+tmux
 ./Allwmake -j 24 -l
 ```
-wait for ~8 hours.
-
+Wait for ~8 hours. Run Allwamke again to check if all libraries/apps are built
+```
+./Allwmake -j 24 -l
+```
 The module should load the following commands:
 ```
 module load fujitsu/compiler/4.8
