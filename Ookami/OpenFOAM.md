@@ -80,7 +80,7 @@ cd $WM_PROJECT_DIR
 tmux
 ./Allwmake -j 24 -l
 ```
-Wait for ~8 hours. Run Allwamke again to check if all libraries/apps are built
+Wait for ~4 hours. Run Allwamke again to check if all libraries/apps are built
 ```
 ./Allwmake -j 24 -l
 ```
