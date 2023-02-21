@@ -14,6 +14,7 @@ export MPI_ROOT=/opt/FJSVstclanga/cp-1.0.21.02/
 module load cmake/3.24.2
 ```
 ## Download OpenFOAM-v2212
+Start from the folder you want, e.g. `cd /lustre`
 ```
 git clone https://develop.openfoam.com/Development/openfoam.git OpenFOAM-v2212
 cd OpenFOAM-v2212
@@ -66,7 +67,7 @@ tar -xvf CGAL-4.14.3.tar.xz --directory sources/cgal
 ./makeCGAL -with-lib gmp-none mpfr-none
 ```
 ### Build ADIOS2
-Currently not available due to `libfabric` issue.
+Currently not available due to `libfabric` issue. Skip this step for now
 ```
 wget https://github.com/ornladios/ADIOS2/archive/v2.8.3.tar.gz
 mkdir -p sources/adios
