@@ -30,18 +30,22 @@ index a935a16f93..52d16466cb 100644
  # [FOAM_SETNAN] - Initialize memory with NaN
  #               - overrides the 'setNaN' controlDict entry
 diff --git a/etc/config.sh/CGAL b/etc/config.sh/CGAL
-index 68f679de00..0d4cc9eeb8 100644
+index 68f679de00..9a8a0e9081 100644
 --- a/etc/config.sh/CGAL
 +++ b/etc/config.sh/CGAL
-@@ -44,7 +44,7 @@
+@@ -43,10 +43,10 @@
+ #------------------------------------------------------------------------------
  # USER EDITABLE PART: Changes made here may be lost with the next upgrade
 
- boost_version=boost_1_74_0
--cgal_version=CGAL-4.14.3
-+cgal_version=CGAL-5.5.1
+-boost_version=boost_1_74_0
++boost_version=boost-system
+ cgal_version=CGAL-4.14.3
 
- export BOOST_ARCH_PATH="$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/$boost_version"
+-export BOOST_ARCH_PATH="$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/$boost_version"
++export BOOST_ARCH_PATH=/cm/local/apps/boost/1.71.0
  export CGAL_ARCH_PATH="$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/$cgal_version"
+
+ # export GMP_ARCH_PATH=...
 diff --git a/etc/config.sh/FFTW b/etc/config.sh/FFTW
 index 6d26f9d970..d6753c33e1 100644
 --- a/etc/config.sh/FFTW
@@ -216,6 +220,31 @@ index e9e26efa24..8b4062fa25 100644
 
              // Distribute the neighbour side using psi for this cell
              for (label facei=fStart; facei<fEnd; facei++)
+diff --git a/wmake/rules/General/cgal b/wmake/rules/General/cgal
+index 7442d4071e..96412945fb 100644
+--- a/wmake/rules/General/cgal
++++ b/wmake/rules/General/cgal
+@@ -10,13 +10,13 @@
+ # - names may change [see wmake/scripts/have_cgal]
+ # (no-cgal | cgal-header | cgal-no-mpfr | cgal-mpfr)
+
+-cgal_subrule := cgal-mpfr
+-ifneq (,$(findstring header,$(CGAL_FLAVOUR)))
+-    cgal_subrule := cgal-header-only
+-endif
+-ifneq (,$(findstring no-mpfr,$(CGAL_FLAVOUR)))
+-    cgal_subrule := cgal-no-mpfr
+-endif
++cgal_subrule := cgal-no-mpfr
++# ifneq (,$(findstring header,$(CGAL_FLAVOUR)))
++#     cgal_subrule := cgal-header-only
++# endif
++# ifneq (,$(findstring no-mpfr,$(CGAL_FLAVOUR)))
++#     cgal_subrule := cgal-no-mpfr
++# endif
+
+ # ----------------------------------------------------------------------------
+ # BOOST include/library directories - synthesize from ARCH_PATH as required
 diff --git a/wmake/rules/linuxARM64Fujitsu/c b/wmake/rules/linuxARM64Fujitsu/c
 index a7524703b1..bf91ae46d5 100644
 --- a/wmake/rules/linuxARM64Fujitsu/c
