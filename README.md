@@ -1,7 +1,7 @@
 # OztekinGroup
 Instructions to reinstall lab workstations
 
-End Of Life: 2030
+End Of Life: April 2025
 ## Creating Installer
 1. Make sure the `Secure Boot` in UEFI BIOS is disabled.
 2. Download [Ubuntu 20.04 LTS image](https://releases.ubuntu.com/focal/ubuntu-20.04.5-desktop-amd64.iso).
