@@ -7,6 +7,7 @@ module load fujitsu/compiler/4.8
 module load fftw3/fujitsu/sve-1.0.0
 module load petsc/fujitsu4.8/3.18.3
 module load boost/1.71.0
+module load libfabric/1.16.1
 export MPI_ROOT=/opt/FJSVstclanga/cp-1.0.21.02/
 ```
 ### Build only
@@ -67,7 +68,6 @@ tar -xvf CGAL-4.14.3.tar.xz --directory sources/cgal
 ./makeCGAL -with-lib gmp-none mpfr-none
 ```
 ### Build ADIOS2
-Currently not available due to `libfabric` issue. Skip this step for now
 ```
 wget https://github.com/ornladios/ADIOS2/archive/v2.8.3.tar.gz
 mkdir -p sources/adios
@@ -90,6 +90,7 @@ module load fujitsu/compiler/4.8
 module load fftw3/fujitsu/sve-1.0.0
 module load petsc/fujitsu4.8/3.18.3
 module load boost/1.71.0
+module load libfabric/1.16.1
 export MPI_ROOT=/opt/FJSVstclanga/cp-1.0.21.02/ 
 source ???/OpenFOAM-v2212/etc/bashrc
 ```
