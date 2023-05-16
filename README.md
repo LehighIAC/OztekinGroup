@@ -4,7 +4,7 @@ Instructions to reinstall lab workstations
 # OztekinGroup
 Instructions to reinstall lab workstations
 
-End Of Life: April 2025
+End Of Life: April 2027
 ## Creating Installer
 1. Make sure the `Secure Boot` in UEFI BIOS is disabled.
 2. Download [Ubuntu 22.04 LTS image](https://releases.ubuntu.com/jammy/ubuntu-22.04.2-desktop-amd64.iso).
