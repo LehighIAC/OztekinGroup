@@ -83,7 +83,7 @@ mkdir OpenFOAM
 cd OpenFOAM
 hg clone http://hg.code.sf.net/p/openfoam-extend/swak4Foam swak4Foam
 cd swak4Foam
-hg update 1642259a7273
+hg update fcd6762530e6
 export WM_NCOMPPROCS=$(nproc)
 ./Allwmake
 ```
