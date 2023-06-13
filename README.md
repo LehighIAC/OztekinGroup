@@ -113,7 +113,7 @@ sudo apt install -y ./rustdesk-1.1.9.deb
 ```
 The private server address is `oztekingroup.dept.lehigh.edu`
 
-The public key is `Pg1rNc2wFY5x2LdhYLSEzmGpQXC6yDgCdjZ3CgbDwd8=`
+The public key(mandatory) is `Z3+VYaZLrFlV42+Rdl6LR8DKSuZ+Zgyx5BeK9Y22ksY=`
 
 ## Post-installation
 1. Fix internal HDD ownership after reinstallation.
