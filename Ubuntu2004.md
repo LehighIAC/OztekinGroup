@@ -4,7 +4,7 @@ Instructions to reinstall lab workstations
 End Of Life: April 2025
 ## Creating Installer
 1. Make sure the `Secure Boot` in UEFI BIOS is disabled.
-2. Download [Ubuntu 20.04 LTS image](https://releases.ubuntu.com/focal/ubuntu-20.04.5-desktop-amd64.iso).
+2. Download [Ubuntu 20.04 LTS image](https://releases.ubuntu.com/focal/ubuntu-20.04.6-desktop-amd64.iso)
 3. Use [Ventoy](https://github.com/ventoy/Ventoy/releases) to create the installer media. You don't need to write images to the flash drive anymore.
 4. Boot from the flash drive and select Ubuntu image.
 5. Install Ubuntu. 
@@ -63,8 +63,8 @@ Use `chown -R oztekinlab /share/Apps/A*` and `chgrp -R oztekinlab /share/Apps/A*
 ```
 sudo apt install -y curl
 curl https://dl.openfoam.com/add-debian-repo.sh | sudo bash
-sudo apt install -y openfoam2212-default
-echo 'source /usr/lib/openfoam/openfoam2212/etc/bashrc' >> ~/.bashrc 
+sudo apt install -y openfoam2306-default
+echo 'source /usr/lib/openfoam/openfoam2306/etc/bashrc' >> ~/.bashrc 
 ```
 
 ## Paraview
@@ -74,9 +74,9 @@ sudo apt install -y paraview
 ```
 If you want to use the latest version(5.11)
 ```
-wget https://www.paraview.org/files/v5.11/ParaView-5.11.1-MPI-Linux-Python3.9-x86_64.tar.gz
-tar -xvf ParaView-5.11.1-MPI-Linux-Python3.9-x86_64.tar.gz
-mv ParaView-5.11.1-MPI-Linux-Python3.9-x86_64/ ParaView
+wget https://www.paraview.org/files/v5.11/ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz
+tar -xvf ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz
+mv ParaView-5.11.2-MPI-Linux-Python3.9-x86_64/ ParaView
 echo 'PATH=~/ParaView/bin:$PATH' >> ~/.bashrc 
 ```
 ## swak4foam
@@ -87,7 +87,7 @@ mkdir OpenFOAM
 cd OpenFOAM
 hg clone http://hg.code.sf.net/p/openfoam-extend/swak4Foam swak4Foam
 cd swak4Foam
-hg update 1642259a7273
+hg update develop
 export WM_NCOMPPROCS=$(nproc)
 ./Allwmake
 ```
@@ -105,15 +105,15 @@ pyFoamPlotWatcher.py <logfilename>
 ```
 ## Install Anydesk
 ```
-wget https://download.anydesk.com/linux/anydesk_6.2.1-1_amd64.deb
-sudo apt install -y ./anydesk_6.2.1-1_amd64.deb
+wget https://download.anydesk.com/linux/anydesk_6.3.0-1_amd64.deb
+sudo apt install -y ./anydesk_6.3.0-1_amd64.deb
 ```
 Then enable unattended access.
 
 ## Install Rustdesk
 ```
-wget https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9.deb
-sudo apt install -y ./rustdesk-1.1.9.deb
+wget https://github.com/rustdesk/rustdesk/releases/download/1.2.3/rustdesk-1.2.3-x86_64.deb
+sudo apt install -y ./rustdesk-1.2.3-x86_64.deb
 ```
 The private server address is `oztekingroup.dept.lehigh.edu`
 
