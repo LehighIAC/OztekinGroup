@@ -84,10 +84,11 @@ cd OpenFOAM
 hg clone http://hg.code.sf.net/p/openfoam-extend/swak4Foam swak4Foam
 cd swak4Foam
 hg update develop
+ln -s swakConfiguration.automatic swakConfiguration
 export WM_NCOMPPROCS=$(nproc)
 ./Allwmake
 ```
-If the compilation fails, run `./Allwmake` multiple rounds until it finishes.
+If the compilation fails, run `./Allwmake` multiple rounds until it compiles without error.
 
 ## pyFoam
 ```
