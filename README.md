@@ -12,8 +12,8 @@ End Of Life: April 2027
 4. Boot from the flash drive and select Ubuntu image.
 5. Install Ubuntu. 
 ## Options
-1. Choose `Minimal Installaion`. Select `Downloads updates`. Don't install third party software for now.
-2. Installation Destination: Select `Something else`. Delete all existing partitions on the SSD. Set up 200 MB for `EFI System Partition`, **at least** 90 GB for `/`(use `ext4`) and the rest to `/home`(use `ext4`). No need to have `/swap` if the RAM is large enough.
+1. Choose `Standard Installaion`. Select `Downloads updates`. Don't install third party software for now.
+2. Installation Destination: Select `Something else`. Delete all existing partitions on the SSD. Set up 200 MB for `EFI System Partition`, **at least** 100 GB for `/`(use `ext4`) and the rest to `/home`(use `ext4`). No need to have `/swap` if the RAM is large enough.
 3. set username as `oztekinlab` if it's a public workstation
 
 ## Initialization
@@ -48,12 +48,16 @@ sudo apt install -y libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 liba
 Download A**** via **rsync** (DO NOT use SMB here)
 ```
 sudo mkdir -p /share/Apps
-sudo rsync -aP <username>@oztekingroup.dept.lehigh.edu:/mnt/Lab/IAC/A* /share/Apps
+sudo rsync -aP <your_user_name>@oztekingroup.dept.lehigh.edu:/mnt/Lab/IAC/A* /share/Apps
 ```
 
 While waiting for it, you can continue and come back later.
 
-Use `chown -R oztekinlab /share/Apps/A*` and `chgrp -R oztekinlab /share/Apps/A*` to fix permission.
+Copy desktop shortcut, then right click and select `Allow Launching`
+
+```cp /share/Apps/A*.desktop ~/Desktop```
+
+If you can't open it, run `chown -R oztekinlab /share/Apps/A*` and `chgrp -R oztekinlab /share/Apps/A*` to fix permission.
 
 ## OpenFOAM
 ```
@@ -63,12 +67,12 @@ sudo apt install -y openfoam2306-default
 echo 'source /usr/lib/openfoam/openfoam2306/etc/bashrc' >> ~/.bashrc 
 ```
 
-## Paraview
+## Install Paraview
 Install Paraview 5.10 and its dependencies
 ```
 sudo apt install -y paraview
 ```
-## swak4foam
+## Compile swak4foam
 ```
 sudo apt install -y mercurial python2-dev python3-dev python-is-python3 bison lua5.3
 cd $HOME
@@ -83,7 +87,7 @@ export WM_NCOMPPROCS=$(nproc)
 ```
 If the compilation fails, run `./Allwmake` multiple rounds until it compiles without error.
 
-## pyFoam
+## Install pyFoam
 ```
 sudo apt install -y python3-pip gnuplot
 sudo pip install pyfoam numpy
@@ -96,13 +100,15 @@ pyFoamPlotWatcher.py <logfilename>
 ```
 wget https://download.anydesk.com/linux/anydesk_6.3.0-1_amd64.deb
 sudo apt install -y ./anydesk_6.3.0-1_amd64.deb
+rm ./anydesk_6.3.0-1_amd64.deb
 ```
-Then enable unattended access.
+Then set the password to enable unattended access.
 
 ## Install Rustdesk
 ```
 wget https://github.com/rustdesk/rustdesk/releases/download/1.2.3/rustdesk-1.2.3-x86_64.deb
 sudo apt install -y ./rustdesk-1.2.3-x86_64.deb
+rm ./rustdesk-1.2.3-x86_64.deb
 ```
 The private server address is `oztekingroup.dept.lehigh.edu`
 
