@@ -35,16 +35,9 @@ Wait until finish then restart.
 ### Fully disable Wayland
 Wayland is still enabled at login screen. Disable it to help remote desktop working properly.
 ```
-sudo nano /etc/gdm3/custom.conf
+sudo sed -i 's/#WaylandEnable=false/WaylandEnable=false/' /etc/gdm3/custom.conf
 ```
-Uncomment this line:
-```
-#WaylandEnable=false
-```
-then restart the service
-```
-sudo systemctl restart gdm3
-```
+then reboot.
 ## Install A****(you know...)
 A**** works with Ubuntu 22.04 LTS.
 
@@ -94,7 +87,6 @@ If the compilation fails, run `./Allwmake` multiple rounds until it compiles wit
 ```
 sudo apt install -y python3-pip gnuplot
 sudo pip install pyfoam numpy
-exit
 ```
 Usage:
 ```
@@ -117,9 +109,6 @@ The private server address is `oztekingroup.dept.lehigh.edu`
 The public key(mandatory) is `Z3+VYaZLrFlV42+Rdl6LR8DKSuZ+Zgyx5BeK9Y22ksY=`
 
 ## Post-installation
-1. Fix internal HDD ownership after reinstallation.
-```
-su root
-chown -R <username> <path>
-chgrp -R <groupname> <path>
-```
+1. In `Disks` select `Take ownership` to fix file ownership.
+![Screenshot from 2024-02-27 12-35-35](https://github.com/BrushXue/OztekinGroup/assets/12702149/14ed4d6a-f1a4-4f32-a536-8510daec4d94)
+
