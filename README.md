@@ -1,9 +1,6 @@
 # OztekinGroup
 Instructions to reinstall lab workstations
 
-# OztekinGroup
-Instructions to reinstall lab workstations
-
 End Of Life: April 2027
 ## Creating Installer
 1. Make sure the `Secure Boot` in UEFI BIOS is disabled.
@@ -12,7 +9,7 @@ End Of Life: April 2027
 4. Boot from the flash drive and select Ubuntu image.
 5. Install Ubuntu. 
 ## Options
-1. Choose `Standard Installaion`. Select `Downloads updates`. Don't install third party software for now.
+1. Choose `Minimal Installaion`. Select `Downloads updates`. Don't install third party software for now.
 2. Installation Destination: Select `Something else`. Delete all existing partitions on the SSD. Set up 200 MB for `EFI System Partition`, **at least** 100 GB for `/`(use `ext4`) and the rest to `/home`(use `ext4`). No need to have `/swap` if the RAM is large enough.
 3. set username as `oztekinlab` if it's a public workstation
 
@@ -27,13 +24,14 @@ Go to `Disks` app and select HDD. Click `Edit mount options` and switch `Use Ses
 Reboot
 ## Get rid of Snap
 **It is recommended to copy this section to** `gedit` **as you will lose** `firefox` **during the process**.
-Run the following command **three times**
+
+Run the following command for **three times**
 ```
 for p in $(snap list | awk '{print $1}'); do
   sudo snap remove $p
 done
 ```
-Until it prints:
+until it prints:
 ```
 No snaps are installed yet. Try 'snap install hello-world'.
 ```
@@ -104,7 +102,7 @@ sudo mkdir -p /share/Apps
 sudo rsync -aP <your_user_name>@oztekingroup.dept.lehigh.edu:/mnt/Lab/IAC/A* /share/Apps
 ```
 
-While waiting for it, you can continue and come back later.
+While waiting for it, you can continue to the next section and come back later.
 
 Copy desktop shortcut, then right click and select `Allow Launching`
 
