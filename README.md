@@ -26,7 +26,8 @@ Go to `Disks` app and select HDD. Click `Edit mount options` and switch `Use Ses
 
 Reboot
 ## Get rid of Snap
-Run the following command
+**It is recommended to copy this section to** `gedit` **as you will lose** `firefox` **during the process**.
+Run the following command **three times**
 ```
 for p in $(snap list | awk '{print $1}'); do
   sudo snap remove $p
