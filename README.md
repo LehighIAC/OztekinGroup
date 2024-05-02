@@ -25,11 +25,63 @@ sudo apt upgrade
 Go to `Disks` app and select HDD. Click `Edit mount options` and switch `Use Session Defaults` to `OFF`
 
 Reboot
+## Get rid of Snap
+Run the following command
+```
+for p in $(snap list | awk '{print $1}'); do
+  sudo snap remove $p
+done
+```
+Until it prints:
+```
+No snaps are installed yet. Try 'snap install hello-world'.
+```
+Remove snap files:
+```
+sudo systemctl stop snapd
+sudo systemctl disable --now snapd.socket
 
+for m in /snap/core/*; do
+   sudo umount $m
+done
+
+sudo apt autoremove --purge snapd
+
+rm -rf ~/snap
+sudo rm -rf /snap
+sudo rm -rf /var/snap
+sudo rm -rf /var/lib/snapd
+sudo rm -rf /var/cache/snapd
+```
+Configure `apt`
+```
+sudo sh -c "cat > /etc/apt/preferences.d/no-snapd.pref" << EOL
+Package: snapd
+Pin: release a=*
+Pin-Priority: -10
+EOL
+```
+```
+sudo sh -c "cat > /etc/apt/preferences.d/no-firefox.pref" << EOL
+Package: firefox
+Pin: release a=*
+Pin-Priority: -10
+EOL
+```
+Install clean version software
+```
+sudo add-apt-repository ppa:mozillateam/ppa
+sudo sh -c "cat > /etc/apt/preferences.d/mozillateam-firefox.pref" << EOL
+Package: firefox*
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 501
+EOL
+sudo apt update
+sudo apt install firefox-esr gnome-software
+```
 ## Graphics Driver
 ### Nvidia
 Go to `Additional Drivers` app, select the latest NVIDIA driver that has been **tested**.
-Wait until finish then restart.
 ### AMD
 `amdgpu` is built into kernel and AMD graphic cards are plug-and-play.
 ### Fully disable Wayland
@@ -98,17 +150,17 @@ pyFoamPlotWatcher.py <logfilename>
 ```
 ## Install Anydesk
 ```
-wget https://download.anydesk.com/linux/anydesk_6.3.0-1_amd64.deb
-sudo apt install -y ./anydesk_6.3.0-1_amd64.deb
-rm ./anydesk_6.3.0-1_amd64.deb
+wget https://download.anydesk.com/linux/anydesk_6.3.2-1_amd64.deb
+sudo apt install -y ./anydesk_6.3.2-1_amd64.deb
+rm ./anydesk_6.3.2-1_amd64.deb
 ```
 Then set the password to enable unattended access.
 
-## Install Rustdesk
+## Install Rustdesk (in case Anydesk says you are a commercial user)
 ```
-wget https://github.com/rustdesk/rustdesk/releases/download/1.2.3/rustdesk-1.2.3-x86_64.deb
-sudo apt install -y ./rustdesk-1.2.3-x86_64.deb
-rm ./rustdesk-1.2.3-x86_64.deb
+wget https://github.com/rustdesk/rustdesk/releases/download/1.2.3-2/rustdesk-1.2.3-2-x86_64.deb
+sudo apt install -y ./rustdesk-1.2.3-2-x86_64.deb
+rm ./rustdesk-1.2.3-2-x86_64.deb
 ```
 The private server address is `oztekingroup.dept.lehigh.edu`
 
