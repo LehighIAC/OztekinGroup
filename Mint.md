@@ -18,14 +18,17 @@ sudo apt update
 sudo apt upgrade
 ```
 Go to `Disks` app and select HDD. Click `Edit mount options` and switch `Use Session Defaults` to `OFF`. Select `Take ownership` to fix file ownership.
-
+Disable printer discovery:
+```
+sudo apt purge cups-browsed
+```
 Reboot
 
 ## Graphics Driver
 ### Nvidia
-Go to `Driver Manager` app, select the latest NVIDIA driver that has been **tested**.
+Go to `Driver Manager` app, select the latest NVIDIA driver that has been **tested**. Then reboot.
 ### AMD
-`amdgpu` is built into kernel and AMD graphic cards are plug-and-play.
+`amdgpu` opensource driver is built into kernel and AMD graphic cards are plug-and-play.
 
 ## Install A****(you know...)
 A**** works with Linux Mint 21
@@ -40,12 +43,13 @@ sudo mkdir -p /share/Apps
 sudo rsync -aP <your_user_name>@oztekingroup.dept.lehigh.edu:/mnt/Lab/IAC/A* /share/Apps
 ```
 
-While waiting for it, you can continue to the next section and come back later.
+### While waiting for it, you can continue to the next section and come back later.
 
-Copy desktop shortcut, then right click and select `Allow Launching`
+Copy desktop shortcut
 ```
 cp /share/Apps/A*.desktop ~/Desktop
 ```
+then right click -> Permissions -> Allow executing file as program
 
 If you can't launch A*, run `chown -R oztekinlab /share/Apps/A*` and `chgrp -R oztekinlab /share/Apps/A*` to fix permission.
 
@@ -71,7 +75,7 @@ ln -s swakConfiguration.automatic swakConfiguration
 export WM_NCOMPPROCS=$(nproc)
 ./Allwmake
 ```
-While waiting for it, you can continue to the next section and come back later.
+### While waiting for it, you can continue to the next section and come back later.
 
 If the compilation fails, run `./Allwmake` for multiple times until it compiles without error.
 
