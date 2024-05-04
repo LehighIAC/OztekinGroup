@@ -57,6 +57,7 @@ echo 'source /usr/lib/openfoam/openfoam2306/etc/bashrc' >> ~/.bashrc
 ```
 
 ## Compile swak4foam
+Start another terminal window.
 ```
 sudo apt install -y mercurial python2-dev python3-dev python-is-python3 bison lua5.3
 cd $HOME
@@ -70,6 +71,7 @@ export WM_NCOMPPROCS=$(nproc)
 ./Allwmake
 ```
 If the compilation fails, run `./Allwmake` multiple rounds until it compiles without error.
+While waiting for it, you can continue to the next section and come back later.
 
 ## Install Paraview
 Install Paraview 5.10 and its dependencies
