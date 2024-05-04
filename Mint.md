@@ -11,7 +11,7 @@ It is recommended to install the OS without Internet.
 5. Installation type: Select `Something else`. Format all existing partitions on the SSD. Set up 200 MB for `EFI System Partition`, 100 GB for `/`(use `ext4`) and the rest to `/home`(use `ext4`). No need to have `/swap` since we have 128GB RAM.
 6. Set username to `oztekinlab` for lab workstations.
 
-## First update
+## Initialization
 Perform system update
 ```
 sudo apt update
@@ -48,7 +48,7 @@ Copy desktop shortcut, then right click and select `Allow Launching`
 
 If you can't open it, run `chown -R oztekinlab /share/Apps/A*` and `chgrp -R oztekinlab /share/Apps/A*` to fix permission.
 
-## OpenFOAM
+## Install OpenFOAM
 ```
 sudo apt install -y curl
 curl https://dl.openfoam.com/add-debian-repo.sh | sudo bash
@@ -70,8 +70,9 @@ ln -s swakConfiguration.automatic swakConfiguration
 export WM_NCOMPPROCS=$(nproc)
 ./Allwmake
 ```
-If the compilation fails, run `./Allwmake` multiple rounds until it compiles without error.
 While waiting for it, you can continue to the next section and come back later.
+
+If the compilation fails, run `./Allwmake` for multiple times until it compiles without error.
 
 ## Install Paraview
 Install Paraview 5.10 and its dependencies
@@ -102,6 +103,12 @@ wget https://github.com/rustdesk/rustdesk/releases/download/1.2.3-2/rustdesk-1.2
 sudo apt install -y ./rustdesk-1.2.3-2-x86_64.deb
 rm ./rustdesk-1.2.3-2-x86_64.deb
 ```
-The private server address is `oztekingroup.dept.lehigh.edu`
-
-The public key(mandatory) is `Z3+VYaZLrFlV42+Rdl6LR8DKSuZ+Zgyx5BeK9Y22ksY=`
+The ID server address is
+```
+oztekingroup.dept.lehigh.edu
+```
+The public key(mandatory) is
+```
+Z3+VYaZLrFlV42+Rdl6LR8DKSuZ+Zgyx5BeK9Y22ksY=
+```
+Then set the password to enable unattended access.
