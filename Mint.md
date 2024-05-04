@@ -43,10 +43,11 @@ sudo rsync -aP <your_user_name>@oztekingroup.dept.lehigh.edu:/mnt/Lab/IAC/A* /sh
 While waiting for it, you can continue to the next section and come back later.
 
 Copy desktop shortcut, then right click and select `Allow Launching`
+```
+cp /share/Apps/A*.desktop ~/Desktop
+```
 
-```cp /share/Apps/A*.desktop ~/Desktop```
-
-If you can't open it, run `chown -R oztekinlab /share/Apps/A*` and `chgrp -R oztekinlab /share/Apps/A*` to fix permission.
+If you can't launch A*, run `chown -R oztekinlab /share/Apps/A*` and `chgrp -R oztekinlab /share/Apps/A*` to fix permission.
 
 ## Install OpenFOAM
 ```
