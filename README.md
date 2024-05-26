@@ -17,7 +17,7 @@ Perform system update
 sudo apt update
 sudo apt upgrade
 ```
-Go to `Disks` app and select HDD. Click `Edit mount options` and switch `Use Session Defaults` to `OFF`. Select `Take ownership` to fix file ownership.
+Go to `Disks` app and select HDD. Click `Edit mount options` and switch `Use Session Defaults` to `OFF`. Select `Take ownership` (select recursive) to fix file ownership.
 
 Disable printer discovery:
 ```
