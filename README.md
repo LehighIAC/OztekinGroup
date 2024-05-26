@@ -8,8 +8,8 @@ It is recommended to install the OS without Internet.
 2. Download [Linux Mint 21 image](https://linuxmint.com/edition.php?id=311).
 3. Use [Ventoy](https://github.com/ventoy/Ventoy/releases) to create the installer media. You don't need to write images to the flash drive anymore.
 4. Boot from the flash drive and select Linux Mint image, then select `Boot in normal mode`. In the desktop environment, select `Install Linux Mint`. 
-5. Installation type: Select `Something else`. Format all existing partitions on the SSD. Set up 200 MB for `EFI System Partition`, 100 GB for `/`(use `ext4`) and the rest to `/home`(use `ext4`). No need to have `/swap` since we have 128GB RAM.
-6. Set username to `oztekinlab` for lab workstations.
+5. Installation type: Select `Something else`. Format all existing partitions on the SSD(check device name). Set up 200 MB for `EFI System Partition`, 102400 MB for `/`(use `ext4`) and the rest to `/home`(use `ext4`). (Make sure select the appropriate free shape). No need to have `/swap` since we have 128GB RAM.
+6. Set username to whatever your want for your workstation, or `oztekinlab` for lab shared workstations.
 
 ## Initialization
 Perform system update
