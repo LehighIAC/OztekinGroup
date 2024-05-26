@@ -77,7 +77,7 @@ export WM_NCOMPPROCS=$(nproc)
 ```
 ### While waiting for it, you can continue to the next section and come back later.
 
-If the compilation fails, run `./Allwmake` for multiple times until it compiles without error.
+If the compilation fails, run `./Allwmake` for multiple (usually 3) times until it compiles without error.
 
 ## Install Paraview
 Open a new terminal
