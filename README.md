@@ -113,6 +113,8 @@ oztekingroup.dept.lehigh.edu
 ```
 The public key(mandatory) is
 ```
-Z3+VYaZLrFlV42+Rdl6LR8DKSuZ+Zgyx5BeK9Y22ksY=
++hJp1uBJ3NdUuv7A38dJYkiLSmWFvyqauwv+535vIns=
 ```
 Then set the password to enable unattended access.
+
+If you see any error on your existing computer, please update the key.
