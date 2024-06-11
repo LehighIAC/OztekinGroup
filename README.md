@@ -58,8 +58,8 @@ Open a new terminal
 ```
 sudo apt install -y curl
 curl https://dl.openfoam.com/add-debian-repo.sh | sudo bash
-sudo apt install -y openfoam2306-default
-echo 'source /usr/lib/openfoam/openfoam2306/etc/bashrc' >> ~/.bashrc 
+sudo apt install -y openfoam2312-default
+echo 'source /usr/lib/openfoam/openfoam2312/etc/bashrc' >> ~/.bashrc 
 ```
 
 ## Compile swak4foam
@@ -77,7 +77,7 @@ export WM_NCOMPPROCS=$(nproc)
 ```
 ### While waiting for it, you can continue to the next section and come back later.
 
-If the compilation fails, run `./Allwmake` for multiple (usually 3) times until it compiles without error.
+If the compilation fails, run `./Allwmake` for multiple times (please be patient!) until it compiles without error.
 
 ## Install Paraview
 Open a new terminal
