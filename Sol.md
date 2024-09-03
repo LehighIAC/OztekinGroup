@@ -20,7 +20,7 @@ source $HOME/.bashrc
 ```
 
 3. Compile OpenFOAM
-Due to limitations on the head node, only two core are allowed and you'll have to wait overnight. It is recommended to use `tmux` during the building process.
+Due to limitations on the head node, only two cores are allowed and you'll have to wait overnight. It is recommended to use `tmux` during the building process.
 ```bash
 module load cmake boost adios2 fftw hypre kahip metis petsc scotch
 foam
