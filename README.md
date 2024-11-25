@@ -45,7 +45,8 @@ sudo apt -y install libasound2t64 libatk-bridge2.0-0t64 libatk1.0-0t64 libatspi2
 ```
 </details>
 Download A**** via **rsync** (DO NOT use SMB to copy files)
-```
+
+```sh
 sudo mkdir -p /share/Apps
 sudo rsync -aP <your_user_name>@oztekingroup.dept.lehigh.edu:/mnt/Lab/IAC/A* /share/Apps
 ```
